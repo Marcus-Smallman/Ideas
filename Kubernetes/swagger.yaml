@@ -1,0 +1,96 @@
+swagger: '2.0'
+info:
+  description: Ideas API documentation
+  version: 1.0.0
+  title: Ideas API
+  license:
+    name: MIT
+basePath: /
+tags:
+- name: idea
+  description: Idea API
+  externalDocs:
+    description: Find out more
+    url: http://marcussmallman.io/<insert_blog_post_here>
+schemes:
+  - http
+paths:
+  /idea:
+    post:
+      tags:
+      - idea
+      summary: 'Post an Idea.'
+      parameters:
+        - in: body
+          name: body
+          description: A description of an Idea
+          schema:
+            $ref: '#/definitions/IdeaModel'
+          required: true
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successfully posted an Idea.
+  '/idea/{ideaId}':
+    get:
+      tags:
+      - idea
+      summary: Get and Idea by Id.
+      parameters:
+        - in: path
+          name: ideaId
+          description: Unique identifier for an Idea
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Successfully retrieved Idea.
+        '404':
+          description: Idea not found.
+    put:
+      tags:
+      - idea
+      summary: Update an Idea by Id.
+      parameters:
+        - in: path
+          name: ideaId
+          description: Unique identifier for an Idea
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Successfully updated Idea.
+        '404':
+          description: Idea not found.
+    delete:
+      tags:
+      - idea
+      summary: Delete an Idea by Id.
+      parameters:
+        - in: path
+          name: ideaId
+          description: Unique identifier for an Idea
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Successfully deleted Idea.
+        '404':
+          description: Idea not found.
+definitions:
+  IdeaModel:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Unique identifier for an Idea
+      idea:
+        type: string
+        description: A short description of an Idea
+externalDocs:
+  description: Project by Marcus Smallman.
+  url: 'https://marcussmallman.io'

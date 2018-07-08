@@ -6,4 +6,8 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver.Core" version="2.7.0" />
+    <PackageReference Include="MongoDB.Bson" version="2.7.0" />
+  </ItemGroup>
 </Project>

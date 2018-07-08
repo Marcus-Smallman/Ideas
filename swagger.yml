@@ -33,7 +33,9 @@ paths:
         - application/json
       responses:
         '200':
-          description: Successfully posted an Idea.
+          description: Successfully posted an Idea
+          schema:
+            $ref: '#/definitions/StoredIdeaModel'
   '/idea/{ideaId}':
     get:
       tags:
@@ -82,6 +84,12 @@ paths:
           description: Idea not found.
 definitions:
   IdeaModel:
+    type: object
+    properties:
+      idea:
+        type: string
+        description: A short description of an Idea
+  StoredIdeaModel:
     type: object
     properties:
       id:

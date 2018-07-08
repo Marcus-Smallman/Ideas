@@ -1,6 +1,10 @@
 jobs:
   include:
     - stage: build
+      before_install:
+        - sudo apt-get update -qq
+        - sudo apt-get install -qq curl
+        - curl -sSL https://cli.openfaas.com | sudo -E sh
       script: bash build.sh
     - stage: test
       script: echo test

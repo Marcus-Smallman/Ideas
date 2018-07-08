@@ -1,7 +1,7 @@
 jobs:
   include:
     - stage: build
-      script: ls
+      script: bash build.sh
     - stage: test
       script: echo test
     - stage: deploy

@@ -1,3 +1,7 @@
-template
+# Ignore
+template/*
 build
 *.vscode
+
+# Do not ignore
+!template/csharp-armhf/

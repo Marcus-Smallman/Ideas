@@ -4,7 +4,7 @@ jobs:
     - stage: build
       install: bash build-scripts/build/install-prerequisites.sh
       script: bash build-scripts/build/build.sh
-    - stage: test
-      script: echo test
-    - stage: deploy
-      script: echo deploy
+#    - stage: test
+#      script: echo test
+#    - stage: deploy
+#      script: echo deploy

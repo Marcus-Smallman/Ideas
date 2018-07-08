@@ -1,7 +1,7 @@
 jobs:
   include:
     - stage: build
-      script: sudo ./build.sh
+      script: ls
     - stage: test
       script: echo test
     - stage: deploy

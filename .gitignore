@@ -1,6 +1,6 @@
 # Ignore
 template/*
-build
+build/*
 *.vscode
 
 # Do not ignore

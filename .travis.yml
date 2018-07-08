@@ -2,8 +2,8 @@ sudo: required
 jobs:
   include:
     - stage: build
-      install: bash scripts/build/install-prerequisites.sh
-      script: bash scripts/build/build.sh
+      install: bash build-scripts/build/install-prerequisites.sh
+      script: bash build-scripts/build/build.sh
     - stage: test
       script: echo test
     - stage: deploy

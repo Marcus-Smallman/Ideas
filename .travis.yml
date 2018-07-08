@@ -1,1 +1,8 @@
-language: csharp
+jobs:
+  include:
+    - stage: build
+      script: echo build
+    - stage: test
+      script: echo test
+    - stage: deploy
+      script: echo deploy

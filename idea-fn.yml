@@ -1,0 +1,9 @@
+provider:
+  name: faas
+  gateway: http://192.168.0.13:31112
+
+functions:
+  idea-fn:
+    lang: csharp-armhf
+    handler: ./idea-fn
+    image: marcussmallman/idea-fn

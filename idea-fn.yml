@@ -7,3 +7,6 @@ functions:
     lang: csharp-armhf
     handler: ./idea-fn
     image: marcussmallman/idea-fn
+    environment:
+      read_timeout: 20
+      write_timeout: 20

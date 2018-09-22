@@ -21,9 +21,19 @@ namespace root
 
         static void Main(string[] args)
         {
-            string buffer = getStdin();
             FunctionHandler f = new FunctionHandler();
-            f.Handle(buffer);
+
+            // The watchdog supports the following HTTP Methods: GET, POST, PUT, DELETE, UPDATE.
+            // The only method that does not contain a body is a GET, so the following is performed.
+            if (Environment.GetEnvironmentVariable("Http_Method").Equals("GET"))
+            {
+                f.Handle();
+            }
+            else
+            {
+                string buffer = getStdin();
+                f.Handle(buffer);
+            }
         }
     }
 }

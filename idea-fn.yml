@@ -10,3 +10,4 @@ functions:
     environment:
       read_timeout: 20
       write_timeout: 20
+      mongo_endpoint: mongodb-service.ideas:27017

@@ -1,7 +1,10 @@
 # Ignore
 template/*
 build/*
+client/*
+docs/tmp/*
 *.vscode
+*.vs
 
 # Do not ignore
 !template/csharp-armhf/

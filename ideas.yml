@@ -5,7 +5,7 @@ provider:
 functions:
   create-idea:
     lang: csharp-armhf
-    handler: ./create-idea
+    handler: ./functions/create-idea
     image: marcussmallman/create-idea
     environment:
       read_timeout: 20
@@ -13,7 +13,7 @@ functions:
       mongo_endpoint: mongodb-service.ideas:27017
   get-idea:
     lang: csharp-armhf
-    handler: ./get-idea
+    handler: ./functions/get-idea
     image: marcussmallman/get-idea
     environment:
       read_timeout: 20
@@ -21,7 +21,7 @@ functions:
       mongo_endpoint: mongodb-service.ideas:27017
   delete-idea:
     lang: csharp-armhf
-    handler: ./delete-idea
+    handler: ./functions/delete-idea
     image: marcussmallman/delete-idea
     environment:
       read_timeout: 20

@@ -2,22 +2,27 @@
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using System;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Function
 {
     public class FunctionHandler
     {
-        public void Handle(string input) {
-            var client = new MongoClient(string.Format("mongodb://{0}", Environment.GetEnvironmentVariable("mongo_endpoint")));
-            var clientDB = client.GetDatabase("ideasdb");
-            var collection = clientDB.GetCollection<BsonDocument>("ideas");
+        public static IMongoDatabase ClientDB;
 
+        public Task<string> Handle(string input) {
+            if (ClientDB == null)
+            {
+                var client = new MongoClient(string.Format("mongodb://{0}", Environment.GetEnvironmentVariable("mongo_endpoint")));
+                ClientDB = client.GetDatabase("ideasdb");
+            }
+
+            var collection = ClientDB.GetCollection<BsonDocument>("ideas");
             var filter = new BsonDocument("_id", input);
 
             collection.DeleteOne(filter);
 
-            Console.WriteLine(JsonConvert.SerializeObject(new SuccessModel() { message = "idea deleted successfully" }));
+            return Task.FromResult(JsonConvert.SerializeObject(new SuccessModel() { message = "idea deleted successfully" }));
         }
     }
 

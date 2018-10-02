@@ -1,32 +1,70 @@
 ﻿// Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// Influenced by https://github.com/burtonr/csharp-kestrel-template
+
 using System;
-using System.Text;
+using System.IO;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Function;
+using Microsoft.AspNetCore.Http;
 
 namespace root
 {
-    class Program
+    public class Program
     {
-        private static string getStdin() {
-            StringBuilder buffer = new StringBuilder();
-            string s;
-            while ((s = Console.ReadLine()) != null)
-            {
-                buffer.AppendLine(s);
-            }
-            return buffer.ToString();
-        }
 
         static void Main(string[] args)
         {
-            string buffer = getStdin();
-            if(buffer.EndsWith('\n')){
-                buffer = buffer.Substring(0, buffer.Length - 1);
+            BuildWebHost(args).Run();
+        }
+
+        private static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:5000/")
+                .Build();
+    }
+
+    public class Startup
+    {
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
             }
-            FunctionHandler f = new FunctionHandler();
-            f.Handle(buffer);
+
+            app.Run(async (context) =>
+            {
+                var functionHandler = new FunctionHandler();
+                try
+                {
+                    var requestBody = getRequest(context.Request.Body);
+                    var result = functionHandler.Handle(requestBody).Result;
+                    await context.Response.WriteAsync(result);
+                }
+                catch (Exception ex)
+                {
+                    await context.Response.WriteAsync(ex.Message);
+                }
+            });
+        }
+
+        private string getRequest(Stream inputBody)
+        {
+            StreamReader reader = new StreamReader(inputBody);
+            string text = reader.ReadToEnd();
+            return text;
         }
     }
 }

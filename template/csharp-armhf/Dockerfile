@@ -17,7 +17,8 @@ COPY .  .
 
 RUN dotnet publish -c release -o published -r linux-arm
 
-ADD https://github.com/openfaas/faas/releases/download/0.6.1/fwatchdog-armhf /usr/bin/fwatchdog
+# Influenced by https://github.com/burtonr/csharp-kestrel-template
+ADD https://github.com/openfaas-incubator/of-watchdog/releases/download/0.4.0/of-watchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 FROM microsoft/dotnet:2.0.0-runtime-stretch-arm32v7
@@ -27,5 +28,9 @@ COPY --from=builder /root/src/published .
 COPY --from=builder /usr/bin/fwatchdog /
 
 ENV fprocess="dotnet ./root.dll"
+ENV cgi_headers="true"
+ENV mode="http"
+ENV upstream_url="http://localhost:5000"
+
 EXPOSE 8080
 CMD ["/fwatchdog"]

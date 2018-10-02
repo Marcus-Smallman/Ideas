@@ -1,11 +1,11 @@
 swagger: '2.0'
 info:
-  description: Ideas API documentation
+  description: This is version 1.0.0 of the Ideas API. Before the API is described it needs to be made clear that this is built using serverless functions. This means that it is not very RESTful. As such, the API has been designed in such a way that it is unique for this project. The patterns and design choices used are a first pass iteration and are sure to be updated if necessary.
   version: 1.0.0
   title: Ideas API
   license:
     name: MIT
-basePath: /
+basePath: /function
 tags:
 - name: idea
   description: Idea API
@@ -15,7 +15,7 @@ tags:
 schemes:
   - http
 paths:
-  /idea:
+  '/create-idea':
     post:
       tags:
       - idea
@@ -36,46 +36,51 @@ paths:
           description: Successfully posted an Idea
           schema:
             $ref: '#/definitions/StoredIdeaModel'
-  '/idea/{ideaId}':
-    get:
+  '/get-idea':
+    post:
       tags:
       - idea
       summary: Get and Idea by Id.
       parameters:
-        - in: path
-          name: ideaId
+        - in: body
+          name: body
           description: Unique identifier for an Idea
-          type: string
+          schema:
+            $ref: '#/definitions/IdeaModel'
           required: true
       responses:
         '200':
           description: Successfully retrieved Idea.
         '404':
           description: Idea not found.
-    put:
+  '/update-idea':
+    post:
       tags:
       - idea
       summary: Update an Idea by Id.
       parameters:
-        - in: path
-          name: ideaId
+        - in: body
+          name: body
           description: Unique identifier for an Idea
-          type: string
+          schema:
+            $ref: '#/definitions/IdeaModel'
           required: true
       responses:
         '200':
           description: Successfully updated Idea.
         '404':
           description: Idea not found.
-    delete:
+  '/delete-idea':
+    post:
       tags:
       - idea
       summary: Delete an Idea by Id.
       parameters:
-        - in: path
-          name: ideaId
+        - in: body
+          name: body
           description: Unique identifier for an Idea
-          type: string
+          schema:
+            $ref: '#/definitions/IdeaModel'
           required: true
       responses:
         '200':
@@ -84,11 +89,8 @@ paths:
           description: Idea not found.
 definitions:
   IdeaModel:
-    type: object
-    properties:
-      idea:
-        type: string
-        description: A short description of an Idea
+    type: string
+    description: A short description of an Idea
   StoredIdeaModel:
     type: object
     properties:

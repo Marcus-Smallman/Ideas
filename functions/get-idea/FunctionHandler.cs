@@ -3,15 +3,22 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace Function
 {
     public class FunctionHandler
     {
-        public void Handle(string input) {
-            var client = new MongoClient(string.Format("mongodb://{0}", Environment.GetEnvironmentVariable("mongo_endpoint")));
-            var clientDB = client.GetDatabase("ideasdb");
-            var collection = clientDB.GetCollection<BsonDocument>("ideas");
+        public static IMongoDatabase ClientDB;
+
+        public Task<string> Handle(string input) {
+            if (ClientDB == null)
+            {
+                var client = new MongoClient(string.Format("mongodb://{0}", Environment.GetEnvironmentVariable("mongo_endpoint")));
+                ClientDB = client.GetDatabase("ideasdb");
+            }
+
+            var collection = ClientDB.GetCollection<BsonDocument>("ideas");
 
             var response = JsonConvert.SerializeObject(new ErrorModel() { error = "not found" });
 
@@ -29,7 +36,7 @@ namespace Function
                 });
             }
             
-            Console.WriteLine(response.ToLower());
+            return Task.FromResult(response.ToLower());
         }
     }
 

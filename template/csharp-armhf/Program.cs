@@ -51,6 +51,7 @@ namespace root
                 {
                     var requestBody = getRequest(context.Request.Body);
                     var result = functionHandler.Handle(requestBody).Result;
+
                     await context.Response.WriteAsync(result);
                 }
                 catch (Exception ex)

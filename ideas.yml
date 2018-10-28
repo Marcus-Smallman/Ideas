@@ -11,19 +11,19 @@ functions:
       read_timeout: 20
       write_timeout: 20
       mongo_endpoint: mongodb-service.ideas:27017
-  get-idea:
-    lang: csharp-armhf
-    handler: ./functions/get-idea
-    image: marcussmallman/get-idea
-    environment:
-      read_timeout: 20
-      write_timeout: 20
-      mongo_endpoint: mongodb-service.ideas:27017
-  delete-idea:
-    lang: csharp-armhf
-    handler: ./functions/delete-idea
-    image: marcussmallman/delete-idea
-    environment:
-      read_timeout: 20
-      write_timeout: 20
-      mongo_endpoint: mongodb-service.ideas:27017
+#  get-idea:
+#    lang: csharp-armhf
+#    handler: ./functions/get-idea
+#    image: marcussmallman/get-idea
+#    environment:
+#      read_timeout: 20
+#      write_timeout: 20
+#      mongo_endpoint: mongodb-service.ideas:27017
+#  delete-idea:
+#    lang: csharp-armhf
+#    handler: ./functions/delete-idea
+#    image: marcussmallman/delete-idea
+#    environment:
+#      read_timeout: 20
+#      write_timeout: 20
+#      mongo_endpoint: mongodb-service.ideas:27017

@@ -29,7 +29,14 @@ namespace Function
 
             collection.InsertOne(ideaModel.ToBsonDocument());
 
-            return Task.FromResult(JsonConvert.SerializeObject(new CreatedIdeaModel() { id = id }));
+            // Cannot change status code: https://github.com/openfaas/faas/issues/157
+            // Suggested to add status code in body response
+            var response = new ResponseModel() { 
+                response = new CreatedIdeaModel() { id = id }, 
+                status = 201 
+            };
+            
+            return Task.FromResult(JsonConvert.SerializeObject(response));
         }
     }
 
@@ -44,5 +51,12 @@ namespace Function
     public class CreatedIdeaModel
     {
         public string id { get; set; }
+    }
+
+    public class ResponseModel
+    {
+        public object response { get; set; }
+
+        public int status { get; set; }
     }
 }

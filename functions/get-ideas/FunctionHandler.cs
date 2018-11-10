@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Function
@@ -11,7 +12,8 @@ namespace Function
     {
         public static IMongoDatabase ClientDB;
 
-        public Task<string> Handle(string input) {
+        public Task<string> Handle(string input)
+        {
             if (ClientDB == null)
             {
                 var client = new MongoClient(string.Format("mongodb://{0}", Environment.GetEnvironmentVariable("mongo_endpoint")));
@@ -25,26 +27,40 @@ namespace Function
                 status = 404
             };
 
-            var filter = new BsonDocument("_id", input);
-            var ideaDoc = collection.Find(filter).FirstOrDefault();
-            if (ideaDoc != null)
+            var filter = Builders<BsonDocument>.Filter.Empty;
+            var ideasDoc = collection.Find(filter).ToList();
+            if (ideasDoc != null)
             {
-                ideaDoc.TryGetValue("_id", out BsonValue id);
-                ideaDoc.TryGetValue("idea", out BsonValue idea);
-
-                response = new ResponseModel()
+                var ideas = new List<IdeaModel>();
+                foreach (var ideaDoc in ideasDoc)
                 {
-                    response = new IdeaModel()
+                    ideaDoc.TryGetValue("_id", out BsonValue id);
+                    ideaDoc.TryGetValue("idea", out BsonValue idea);
+
+                    ideas.Add(new IdeaModel()
                     {
                         id = id?.ToString(),
                         idea = idea?.ToString()
+                    });
+                }
+
+                response = new ResponseModel()
+                {
+                    response = new IdeasModel()
+                    {
+                        ideas = ideas
                     },
                     status = 200
                 };
             }
-            
+
             return Task.FromResult(JsonConvert.SerializeObject(response));
         }
+    }
+
+    public class IdeasModel
+    {
+        public IEnumerable<IdeaModel> ideas { get; set; }
     }
 
     public class IdeaModel

@@ -7,6 +7,6 @@ docs/tmp/*
 *.vs
 
 # Do not ignore
-!template/csharp-armhf/
-template
+!template/csharp-kestrel-armhf/
+
 build

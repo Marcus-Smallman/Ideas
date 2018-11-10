@@ -11,7 +11,8 @@ namespace Function
     {
         public static IMongoDatabase ClientDB;
 
-        public Task<string> Handle(string input) {
+        public Task<string> Handle(string input) 
+        {
             if (ClientDB == null)
             {
                 var client = new MongoClient(string.Format("mongodb://{0}", Environment.GetEnvironmentVariable("mongo_endpoint")));
@@ -22,17 +23,21 @@ namespace Function
 
             var id = Guid.NewGuid().ToString();
             var ideaModel = new IdeaModel()
-                    {
-                        id = id ,
-                        idea = input
-                    };
+            {
+                id = id ,
+                idea = input
+            };
 
             collection.InsertOne(ideaModel.ToBsonDocument());
 
             // Cannot change status code: https://github.com/openfaas/faas/issues/157
             // Suggested to add status code in body response
-            var response = new ResponseModel() { 
-                response = new CreatedIdeaModel() { id = id }, 
+            var response = new ResponseModel() 
+            { 
+                response = new CreatedIdeaModel()
+                { 
+                    id = id 
+                }, 
                 status = 201 
             };
             

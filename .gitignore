@@ -1,7 +1,6 @@
 # Ignore
 template/*
 build/*
-client/ideas-client-old/*
 docs/tmp/*
 *.vscode
 *.vs

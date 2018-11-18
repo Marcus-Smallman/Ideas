@@ -19,7 +19,8 @@
           </md-card-actions>
         </md-card>
         <br />
-        <div v-for="idea in ideas.slice().reverse()" :key="idea.id">
+        <!-- reverse list -->
+        <div v-for="idea in ideas" :key="idea.id">
           <Idea :idea="idea"></Idea>
         </div>
       </md-app-content>

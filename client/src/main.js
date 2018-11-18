@@ -5,7 +5,6 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-// TODO: Only import used components
 Vue.use(VueMaterial)
 
 Vue.config.productionTip = false

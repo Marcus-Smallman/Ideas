@@ -3,7 +3,6 @@
     <md-card class="md-elevation-10">
       <md-card-header>
         <div class="md-title">{{idea.idea}}</div>
-        <div class="md-subhead">{{idea.id}}</div>
       </md-card-header>
 
       <md-card-actions>
@@ -27,8 +26,9 @@ export default {
       axios
         .post('/function/delete-idea', this.idea.id)
         .then(response => {
-          // TODO: Check status codes and perform respective actions
-          this.show = false
+          if (response.data.status === 204) {
+            this.show = false
+          }
         })
         .catch(error => {
           console.log(error)
@@ -43,6 +43,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 </style>

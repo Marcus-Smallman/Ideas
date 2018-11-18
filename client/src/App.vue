@@ -19,7 +19,6 @@
           </md-card-actions>
         </md-card>
         <br />
-        <!-- reverse list -->
         <div v-for="idea in ideas" :key="idea.id">
           <Idea :idea="idea"></Idea>
         </div>
@@ -46,9 +45,10 @@ export default {
         axios
           .post('/function/create-idea', this.input)
           .then(response => {
-            // TODO: Check status codes and perform respective actions
-            this.ideas.push({ id: response.data.response.id, idea: currentInput })
-            this.input = ''
+            if (response.data.status === 201) {
+              this.ideas.unshift({ id: response.data.response.id, idea: currentInput })
+              this.input = ''
+            }
           })
           .catch(error => {
             console.log(error)
@@ -66,7 +66,9 @@ export default {
     axios
       .get('/function/get-ideas')
       .then(response => {
-        this.ideas = response.data.response.ideas
+        if (response.data.status === 200) {
+          this.ideas = response.data.response.ideas.reverse()
+        }
       })
       .catch(error => {
         console.log(error)
@@ -75,9 +77,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   .centered {
-    width: 33%;
+    max-width: 666px;
     margin-left: auto;
     margin-right: auto;
     border: 0px;

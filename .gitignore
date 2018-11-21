@@ -4,6 +4,9 @@ build/*
 docs/tmp/*
 *.vscode
 *.vs
+bin/
+obj/
+
 
 # Do not ignore
 !template/csharp-kestrel-armhf/

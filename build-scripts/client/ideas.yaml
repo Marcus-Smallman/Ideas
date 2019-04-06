@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client
+  namespace: ideas
   labels:
     app: client
 spec:
@@ -24,6 +25,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: client-service
+  namespace: ideas
 spec:
   selector:
     app: client
@@ -31,4 +33,18 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-  type: NodePort
+    name: web
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ideas-client
+  namespace: ideas
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: client-service
+          servicePort: web

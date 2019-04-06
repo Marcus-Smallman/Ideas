@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway
+  namespace: openfaas
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /function
+        backend:
+          serviceName: gateway
+          servicePort: 8080

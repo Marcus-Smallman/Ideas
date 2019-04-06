@@ -3,17 +3,34 @@ param(
     [string]$tagName = "ideas-client"
 )
 
-# Delete previous output if exists
-remove-item $projectPath/out -recurse -erroraction ignore
+### CLEANUP ###
 
-# Create output
+# Delete previous outputs if exists
+remove-item $projectPath/out -recurse -erroraction ignore
+remove-item $projectPath/dist -recurse -erroraction ignore
+
+
+### BUILD  ###
+
+# Create ui output
+npm run build --prefix $projectPath
+
+# Create file static server output
 dotnet publish -c release -o out -r linux-arm $projectPath
+
+
+### PACKAGE ###
 
 # Create docker image
 docker build -t "marcussmallman/$tagName" $projectPath
 
-# Push image
+
+### PUBLISH ###
+
+# Push image to docker
 docker push "marcussmallman/$tagName"
 
-# Deploy
+### DEPLOY ###
+
+# Deploy to kubernetes
 kubectl -n ideas apply -f ideas.yaml

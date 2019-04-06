@@ -30,6 +30,7 @@ docker build -t "marcussmallman/$tagName" $projectPath
 # Push image to docker
 docker push "marcussmallman/$tagName"
 
+
 ### DEPLOY ###
 
 # Deploy to kubernetes

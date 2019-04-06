@@ -43,7 +43,7 @@ export default {
         // Cache the current input as the request could take a while and the input could change.
         const currentInput = this.input
         axios
-          .post('/function/create-idea', this.input)
+          .post('/function/create-idea', currentInput)
           .then(response => {
             if (response.data.status === 201) {
               this.ideas.unshift({ id: response.data.response.id, idea: currentInput })

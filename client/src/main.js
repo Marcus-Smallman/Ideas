@@ -7,8 +7,6 @@ import 'vue-material/dist/theme/default.css'
 
 Vue.use(VueMaterial)
 
-Vue.config.productionTip = false
-
 new Vue({
   render: h => h(App)
 }).$mount('#app')

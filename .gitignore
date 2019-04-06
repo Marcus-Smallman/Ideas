@@ -6,7 +6,7 @@ docs/tmp/*
 *.vs
 bin/
 obj/
-
+out/
 
 # Do not ignore
 !template/csharp-kestrel-armhf/

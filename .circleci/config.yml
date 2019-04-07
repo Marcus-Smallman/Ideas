@@ -1,14 +1,14 @@
 version: 2.1
 
 jobs:
-  # Add build function job
   build-ui:
     docker:
       - image: node:8.15.1
+    working_directory: /client
     steps:
       - checkout
       - run:
-          name: Build UI
+          name: build ui
           command: |
             cd client
             npm install
@@ -17,19 +17,34 @@ jobs:
   build-server:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    working_directory: /client
     steps:
       - checkout
       - run:
-          name: Build Server
+          name: build server
           command: |
-            cd client
             dotnet restore
             dotnet publish -c release -o out -r linux-arm
-  # Add publish docker image job
+  publish-image:
+    docker:
+      - image: docker:18.09.4
+    working_directory: /client
+    steps:
+      - checkout
+      - run: 
+          name: publish image
+          command: |
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker build -t marcussmallman/ideas-client:latest -t marcussmallman/ideas-client:$CIRCLE_BRANCH .
+            docker push marcussmallman/ideas-client:$CIRCLE_BRANCH
 
 workflows:
   version: 2.1
-  build:
+  ideas:
     jobs:
       - build-ui
       - build-server
+      - publish-image:
+          requires:
+            - build-ui
+            - build-server

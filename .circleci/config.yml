@@ -20,11 +20,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build UI
+          name: Build Server
           command: |
             cd client
             dotnet restore
-            dotnet publish -c release -o out -r linux-arm /client
+            dotnet publish -c release -o out -r linux-arm
   # Add publish docker image job
 
 workflows:

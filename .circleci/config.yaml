@@ -1,0 +1,27 @@
+version: 2.1
+
+jobs:
+  # Add build function job
+  build-ui:
+    docker:
+      - image: node:8.15.1
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build --prefix /client
+  build-server:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/aspnet:2.2
+    steps:
+      - checkout
+      - run: dotnet restore
+      - run: dotnet publish -c release -o out -r linux-arm /client
+  # Add publish docker image job
+
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build-ui
+      - build-server

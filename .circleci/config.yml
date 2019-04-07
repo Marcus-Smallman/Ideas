@@ -16,7 +16,7 @@ jobs:
             npm run build
   build-server:
     docker:
-      - image: mcr.microsoft.com/dotnet/core/aspnet:2.2
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     steps:
       - checkout
       - run:

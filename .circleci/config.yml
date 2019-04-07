@@ -2,36 +2,36 @@ version: 2.1
 
 jobs:
   build-ui:
-    working_directory: /client
     docker:
       - image: node:8.15.1
     steps:
       - checkout
       - run:
           name: Build UI
+          working_directory: /client
           command: |
             npm install
             npm run lint
             npm run build
   build-server:
-    working_directory: /client
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     steps:
       - checkout
       - run:
           name: Build Server
+          working_directory: /client
           command: |
             dotnet restore
             dotnet publish -c release -o out -r linux-arm
   publish-image:
-    working_directory: /client
     docker:
       - image: docker:18.09.4
     steps:
       - checkout
       - run: 
           name: Publish Image
+          working_directory: /client
           command: |
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build -t marcussmallman/ideas-client:latest -t marcussmallman/ideas-client:$CIRCLE_BRANCH .

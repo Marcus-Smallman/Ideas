@@ -7,16 +7,18 @@ jobs:
       - image: node:8.15.1
     steps:
       - checkout
+      - run: cd /client
       - run: npm install
       - run: npm run lint
-      - run: npm run build --prefix /client
+      - run: npm run build
   build-server:
     docker:
       - image: mcr.microsoft.com/dotnet/core/aspnet:2.2
     steps:
       - checkout
+      - run: cd /client
       - run: dotnet restore
-      - run: dotnet publish -c release -o out -r linux-arm /client
+      - run: dotnet publish -c release -o out -r linux-arm
   # Add publish docker image job
 
 workflows:

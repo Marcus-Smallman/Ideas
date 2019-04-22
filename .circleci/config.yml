@@ -3,13 +3,12 @@ jobs:
   build-ui:
     docker:
       - image: node:8.15.1
-
+    working_directory: client
     steps:
       - checkout
       - run:
           name: Build UI
           command: |
-            cd client
             npm install
             npm run lint
             npm run build
@@ -20,12 +19,12 @@ jobs:
   build-server:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    working_directory: client
     steps:
       - checkout
       - run:
           name: Build Server
           command: |
-            cd client
             dotnet restore
             dotnet publish -c release -o out -r linux-arm
       - persist_to_workspace:
@@ -34,6 +33,7 @@ jobs:
             - out
   publish-image:
     machine: true
+    working_directory: client
     steps:
       - checkout
       - attach_workspace:

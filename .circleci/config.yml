@@ -41,12 +41,9 @@ jobs:
       - run: 
           name: Publish Image
           command: |
-            ls
-            cd client
-            ls
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker build -t marcussmallman/ideas-client:latest -t marcussmallman/ideas-client:$CIRCLE_BRANCH .
-            docker push marcussmallman/ideas-client:$CIRCLE_BRANCH
+            docker build -t marcussmallman/ideas-client:latest . # Support verson tag
+            docker push marcussmallman/ideas-client:latest
 workflows:
   version: 2.1
   ideas:

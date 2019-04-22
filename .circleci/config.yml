@@ -15,7 +15,7 @@ jobs:
       - save_cache:
           key: client
           paths:
-            - /dist
+            - ~/dist
   build-server:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
@@ -30,7 +30,7 @@ jobs:
       - save_cache:
           key: server
           paths:
-            - /out
+            - ~/out
   publish-image:
     machine: true
     steps:
@@ -43,8 +43,8 @@ jobs:
           name: Publish Image
           command: |
             ls
-            sudo ls /root
             cd client
+            ls
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build -t marcussmallman/ideas-client:latest -t marcussmallman/ideas-client:$CIRCLE_BRANCH .
             docker push marcussmallman/ideas-client:$CIRCLE_BRANCH

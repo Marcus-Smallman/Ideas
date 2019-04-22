@@ -12,6 +12,10 @@ jobs:
             npm install
             npm run lint
             npm run build
+      - save-cache:
+          key: client
+          paths:
+            - ~/dist
   build-server:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
@@ -23,11 +27,18 @@ jobs:
             cd client
             dotnet restore
             dotnet publish -c release -o out -r linux-arm
+      - save-cache:
+          key: server
+          paths:
+            - ~/out
   publish-image:
-    docker:
-      - image: docker:18.09.4
+    machine: true
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - client
+            - server
       - run: 
           name: Publish Image
           command: |

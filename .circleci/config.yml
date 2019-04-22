@@ -43,7 +43,7 @@ jobs:
           name: Publish Image
           command: |
             ls
-            ls /root
+            sudo ls /root
             cd client
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build -t marcussmallman/ideas-client:latest -t marcussmallman/ideas-client:$CIRCLE_BRANCH .

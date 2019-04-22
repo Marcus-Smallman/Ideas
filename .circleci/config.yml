@@ -3,7 +3,7 @@ jobs:
   build-ui:
     docker:
       - image: node:8.15.1
-    working_directory: client
+    working_directory:  ~/project/client
     steps:
       - checkout
       - run:
@@ -19,7 +19,7 @@ jobs:
   build-server:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
-    working_directory: client
+    working_directory:  ~/project/client
     steps:
       - checkout
       - run:
@@ -33,7 +33,7 @@ jobs:
             - out
   publish-image:
     machine: true
-    working_directory: client
+    working_directory: ~/project/client
     steps:
       - checkout
       - attach_workspace:

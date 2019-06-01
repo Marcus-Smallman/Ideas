@@ -8,5 +8,5 @@ bin/
 obj/
 out/
 
-# Do not ignore
-!template/csharp-kestrel-armhf/
+template
+build

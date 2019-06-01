@@ -4,34 +4,38 @@ provider:
 
 functions:
   create-idea:
-    lang: csharp-kestrel-armhf
+    lang: csharp-kestrel-mongo-armhf
     handler: ./functions/create-idea
     image: marcussmallman/create-idea
     environment:
       read_timeout: 20
       write_timeout: 20
       mongo_endpoint: mongodb-service.ideas:27017
+      mongo_collection_name: ideas
   get-idea:
-    lang: csharp-kestrel-armhf
+    lang: csharp-kestrel-mongo-armhf
     handler: ./functions/get-idea
     image: marcussmallman/get-idea
     environment:
       read_timeout: 20
       write_timeout: 20
       mongo_endpoint: mongodb-service.ideas:27017
+      mongo_collection_name: ideas
   get-ideas:
-    lang: csharp-kestrel-armhf
+    lang: csharp-kestrel-mongo-armhf
     handler: ./functions/get-ideas
     image: marcussmallman/get-ideas
     environment:
       read_timeout: 20
       write_timeout: 20
       mongo_endpoint: mongodb-service.ideas:27017
+      mongo_collection_name: ideas
   delete-idea:
-    lang: csharp-kestrel-armhf
+    lang: csharp-kestrel-mongo-armhf
     handler: ./functions/delete-idea
     image: marcussmallman/delete-idea
     environment:
       read_timeout: 20
       write_timeout: 20
       mongo_endpoint: mongodb-service.ideas:27017
+      mongo_collection_name: ideas

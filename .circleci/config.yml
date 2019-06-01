@@ -42,7 +42,7 @@ jobs:
           command: |
             cd client
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker build -t marcussmallman/ideas-client:latest . # Support verson tag
+            docker build -t marcussmallman/ideas-client:latest .
             docker push marcussmallman/ideas-client:latest
 workflows:
   version: 2.1

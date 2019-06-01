@@ -10,25 +10,15 @@ namespace Function
 {
     public class FunctionHandler
     {
-        public static IMongoDatabase ClientDB;
-
-        public Task<string> Handle(string input)
+        public async Task<string> Handle(string input)
         {
-            if (ClientDB == null)
-            {
-                var client = new MongoClient(string.Format("mongodb://{0}", Environment.GetEnvironmentVariable("mongo_endpoint")));
-                ClientDB = client.GetDatabase("ideasdb");
-            }
-
-            var collection = ClientDB.GetCollection<BsonDocument>("ideas");
-
             var response = new ResponseModel()
             {
                 status = 404
             };
 
             var filter = Builders<BsonDocument>.Filter.Empty;
-            var ideasDoc = collection.Find(filter).ToList();
+            var ideasDoc = await this.GetCollection().Find(filter).ToListAsync();
             if (ideasDoc != null)
             {
                 var ideas = new List<IdeaModel>();
@@ -54,27 +44,7 @@ namespace Function
                 };
             }
 
-            return Task.FromResult(JsonConvert.SerializeObject(response));
+            return JsonConvert.SerializeObject(response);
         }
-    }
-
-    public class IdeasModel
-    {
-        public IEnumerable<IdeaModel> ideas { get; set; }
-    }
-
-    public class IdeaModel
-    {
-        [BsonId]
-        public string id { get; set; }
-
-        public string idea { get; set; }
-    }
-
-    public class ResponseModel
-    {
-        public object response { get; set; }
-
-        public int status { get; set; }
     }
 }

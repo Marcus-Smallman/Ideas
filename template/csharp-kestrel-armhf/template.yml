@@ -1,2 +1,0 @@
-language: csharp-kestrel-armhf
-fprocess: dotnet ./root.dll

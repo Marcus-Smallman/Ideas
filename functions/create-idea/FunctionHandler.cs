@@ -15,7 +15,8 @@ namespace Function
             var ideaModel = new IdeaModel()
             {
                 id = id ,
-                idea = input
+                idea = input,
+                createdUtc = DateTime.UtcNow
             };
 
             await this.GetCollection().InsertOneAsync(ideaModel.ToBsonDocument());
@@ -24,7 +25,7 @@ namespace Function
             { 
                 response = new CreatedIdeaModel()
                 { 
-                    id = id 
+                    id = id
                 }, 
                 status = 201 
             };

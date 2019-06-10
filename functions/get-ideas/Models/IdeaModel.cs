@@ -1,3 +1,4 @@
+using System;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Function
@@ -17,5 +18,10 @@ namespace Function
         /// Gets or sets the idea.
         /// </summary>
         public string idea { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time the idea was created.
+        /// </summary>
+        public DateTime? createdUtc { get; set; }
     }
 }

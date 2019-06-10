@@ -22,13 +22,15 @@ namespace Function
             {
                 ideaDoc.TryGetValue("_id", out BsonValue id);
                 ideaDoc.TryGetValue("idea", out BsonValue idea);
+                ideaDoc.TryGetValue("createdUtc", out BsonValue createdUtc);
 
                 response = new ResponseModel()
                 {
                     response = new IdeaModel()
                     {
                         id = id?.ToString(),
-                        idea = idea?.ToString()
+                        idea = idea?.ToString(),
+                        createdUtc = createdUtc?.ToNullableUniversalTime()
                     },
                     status = 200
                 };
